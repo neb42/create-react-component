@@ -8,7 +8,7 @@ function getBasePath(componentName) {
   if (path.isAbsolute(componentName)) {
     return componentName;
   } else {
-    return path.join(files.getCurrentDirectoryBase(), componentName)
+    return path.join(files.getCurrentDirectory(), componentName)
   }
 }
 
@@ -34,13 +34,23 @@ function promptUser(callback) {
   inquirer.prompt(questions).then(callback);
 }
 
+function templateMaps(componentName) {
+  return [
+    { templatePath: 'Component.js.mst', outputFile: `${componentName}.js` },
+    { templatePath: 'Container.js.mst', outputFile: `${componentName}Container.js` },
+    { templatePath: 'index.js.mst', outputFile: `index.js` },
+  ];
+}
+
 function writeFiles(componentName) {
   var basePath = getBasePath(componentName);
+  fs.mkdir(basePath);
 
-  fs.readFile('./templates/Component.js.mst', function (err, data) {
-    if (err) throw err;
-    var output = Mustache.render(data.toString(), { componentName });
-    fs.writeFile(path.join(basePath, `${componentName}.js`), output);
+  templateMaps(componentName).forEach(c => {
+    fs.readFile(path.join('./templates', c.templatePath), function (err, data) {
+      var output = Mustache.render(data.toString(), { componentName });
+      fs.writeFile(path.join(basePath, c.outputFile), output);
+    });
   });
 }
 
