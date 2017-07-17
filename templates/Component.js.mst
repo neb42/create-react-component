@@ -1,0 +1,19 @@
+// @flow
+
+type Props = {};
+type State = {};
+
+import React, { Component } from 'react';
+
+export default class {{ componentName }} extends Component {
+  props: Props;
+  state: State;
+
+  render() {
+    return (
+      <div>
+        {{ componentName }}
+      </div>
+    )
+  }
+};

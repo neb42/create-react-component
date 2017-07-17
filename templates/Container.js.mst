@@ -1,0 +1,25 @@
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {{ componentName }} from './{{ componentName }}';
+
+const mapStateToProps = (state, ownProps) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return bindActionCreators(
+    {},
+    dispatch,
+  );
+};
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)({{ componentName }})

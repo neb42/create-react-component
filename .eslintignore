@@ -1,0 +1,7 @@
+node_modules/
+dist/
+coverage/
+config/wdio.base.js
+flow-typed/
+types/
+static/
