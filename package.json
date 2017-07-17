@@ -1,0 +1,9 @@
+{
+  "name": "react-component-init",
+  "version": "1.0.0",
+  "description": "Creates the skeleton for a react-redux component/container",
+  "main": "index.js",
+  "repository": "https://github.com/neb42/react-component-init.git",
+  "author": "Ben McAlindin <bmcalindin@gmail.com>",
+  "license": "MIT"
+}
