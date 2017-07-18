@@ -5,13 +5,15 @@ type State = {};
 
 import React, { Component } from 'react';
 
+import './{{ componentName }}.{{ cssExtension }}'
+
 export default class {{ componentName }} extends Component {
   props: Props;
   state: State;
 
   render() {
     return (
-      <div>
+      <div className="{{ componentName }}">
         {{ componentName }}
       </div>
     )

@@ -29,39 +29,48 @@ function promptUser(callback) {
         }
       }
     },
+    {
+      name: 'container',
+      type: 'confirm',
+      message: 'Do you need a container?:',
+    },
+    {
+      name: 'cssExtension',
+      type: 'list',
+      message: 'What css file extension do you use?',
+      choices: ['css', 'scss'],
+    },
   ];
 
   inquirer.prompt(questions).then(callback);
 }
 
-function templateMaps(componentName) {
+function templateMaps(componentName, cssExtension, container) {
   return [
-    { templatePath: 'Component.js.mst', outputFile: `${componentName}.js` },
-    { templatePath: 'Container.js.mst', outputFile: `${componentName}Container.js` },
-    { templatePath: 'index.js.mst', outputFile: `index.js` },
+    { render: true, templatePath: 'Component.js.mst', outputFile: `${componentName}.js` },
+    { render: container, templatePath: 'Container.js.mst', outputFile: `${componentName}Container.js` },
+    { render: true, templatePath: 'Styles.css.mst', outputFile: `${componentName}.${cssExtension}` },
+    { render: true, templatePath: 'index.js.mst', outputFile: `index.js` },
   ];
 }
 
-function writeFiles(componentName) {
+function writeFiles({ componentName, container, cssExtension }) {
   var basePath = getBasePath(componentName);
   fs.mkdir(basePath);
 
-  templateMaps(componentName).forEach(c => {
+  templateMaps(componentName, cssExtension, container).forEach(c => {
     fs.readFile(path.join('./templates', c.templatePath), function (err, data) {
-      var output = Mustache.render(data.toString(), { componentName });
-      fs.writeFile(path.join(basePath, c.outputFile), output);
+      var renderedFile = Mustache.render(data.toString(), { componentName, cssExtension });
+      fs.writeFile(path.join(basePath, c.outputFile), renderedFile);
     });
   });
 }
 
 function run() {
   promptUser(function() {
-    var componentName = arguments['0']['componentName'];
-    writeFiles(componentName, function(err) {
-      if(err) {
-        return console.log(err);
-      }
-      console.log("The file was saved!");
+    var options = arguments['0'];
+    writeFiles(options, function(err) {
+      if(err) return console.log(err);
     });
   });
 }
