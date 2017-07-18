@@ -61,7 +61,7 @@ function writeFiles({ componentName, container, cssExtension }) {
   fs.mkdir(basePath);
 
   templateMaps(componentName, cssExtension, container).forEach(c => {
-    fs.readFile(path.join('./templates', c.templatePath), function (err, data) {
+    fs.readFile(path.join(__dirname, 'templates', c.templatePath), function (err, data) {
       var renderedFile = Mustache.render(data.toString(), { componentName, cssExtension });
       fs.writeFile(path.join(basePath, c.outputFile), renderedFile);
     });
