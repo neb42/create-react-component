@@ -1,5 +1,5 @@
 {
-  "name": "create-react-component",
+  "name": "@neb42/create-react-component",
   "version": "1.0.0",
   "description": "Creates the skeleton for a react-redux component/container",
   "main": "index.js",
