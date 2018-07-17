@@ -40,7 +40,7 @@ function promptUser(callback) {
       name: 'cssExtension',
       type: 'list',
       message: 'What css file extension do you use?',
-      choices: ['css', 'scss'],
+      choices: ['Styles.js', '.css', '.scss'],
     },
   ];
 
@@ -49,10 +49,10 @@ function promptUser(callback) {
 
 function templateMaps(componentName, cssExtension, container) {
   return [
-    { render: true, templatePath: 'Component.js.mst', outputFile: `${componentName}.js` },
     { render: container, templatePath: 'Container.js.mst', outputFile: `${componentName}Container.js` },
-    { render: true, templatePath: 'Styles.css.mst', outputFile: `${componentName}.${cssExtension}` },
     { render: true, templatePath: 'index.js.mst', outputFile: `index.js` },
+    { render: true, templatePath: 'Component.js.mst', outputFile: `${componentName}.js` },
+    { render: true, templatePath: 'Styles.css.mst', outputFile: `${componentName}${cssExtension}` },
   ];
 }
 
@@ -60,9 +60,10 @@ function writeFiles({ componentName, container, cssExtension }) {
   var basePath = getBasePath(componentName);
   fs.mkdir(basePath);
 
+  const isStyledComponent = cssExtension === 'Styles.js';
   templateMaps(componentName, cssExtension, container).forEach(c => {
     fs.readFile(path.join(__dirname, 'templates', c.templatePath), function (err, data) {
-      var renderedFile = Mustache.render(data.toString(), { componentName, cssExtension });
+      var renderedFile = Mustache.render(data.toString(), { componentName, cssExtension, isStyledComponent });
       fs.writeFile(path.join(basePath, c.outputFile), renderedFile);
     });
   });

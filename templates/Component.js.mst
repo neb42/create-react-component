@@ -1,21 +1,40 @@
 // @flow
 
-type Props = {};
-type State = {};
+type Props = {
 
-import React, { Component } from 'react';
+};
 
-import './{{ componentName }}.{{ cssExtension }}'
+type State = {
 
-export default class {{ componentName }} extends Component {
+};
+
+import React from 'react';
+
+{{#isStyledComponent}}
+import Styles from './{{ componentName }}Styles'
+{{/isStyledComponent}}
+{{^isStyledComponent}}
+import './{{ componentName }}{{ cssExtension }}'
+{{/isStyledComponent}}
+
+export default class {{ componentName }} extends React.Component<Props, State> {
   props: Props;
-  state: State;
+  state: State = {
+
+  };
 
   render() {
     return (
+      {{#isStyledComponent}}
+      <Styles.Container>
+        {{ componentName }}
+      </Styles.Container>
+      {{/isStyledComponent}}
+      {{^isStyledComponent}}
       <div className="{{ componentName }}">
         {{ componentName }}
       </div>
-    )
+      {{/isStyledComponent}}
+    );
   }
 };
