@@ -7,7 +7,7 @@
   "author": "Ben McAlindin <bmcalindin@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "inquirer": "^3.2.0",
+    "inquirer": "^6.0.0",
     "mustache": "^2.3.0"
   },
   "devDependencies": {},
