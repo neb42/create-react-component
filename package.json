@@ -1,6 +1,6 @@
 {
   "name": "@neb42/create-react-component",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Creates the skeleton for a react-redux component/container",
   "main": "index.js",
   "repository": "https://github.com/neb42/create-react-component.git",
