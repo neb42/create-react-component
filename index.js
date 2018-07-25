@@ -6,20 +6,20 @@ var inquirer = require('inquirer');
 var Mustache = require('mustache');
 var files = require('./lib/files');
 
-function getBasePath(componentName) {
-  if (path.isAbsolute(componentName)) {
-    return componentName;
+function getBasePath(componentPath) {
+  if (path.isAbsolute(componentPath)) {
+    return componentPath;
   } else {
-    return path.join(files.getCurrentDirectory(), componentName)
+    return path.join(files.getCurrentDirectory(), componentPath)
   }
 }
 
 function promptUser(callback) {
   var questions = [
     {
-      name: 'componentName',
+      name: 'componentPath',
       type: 'input',
-      message: 'Enter the name of your component:',
+      message: 'Enter the name/path of your component:',
       validate: function( value ) {
         if (!value.length) {
           return 'Please enter a name for your component';
@@ -56,8 +56,9 @@ function templateMaps(componentName, cssExtension, container) {
   ];
 }
 
-function writeFiles({ componentName, container, cssExtension }) {
-  var basePath = getBasePath(componentName);
+function writeFiles({ componentPath, container, cssExtension }) {
+  var basePath = getBasePath(componentPath);
+  var componentName = componentPath.split('/').slice(-1)[0];
   fs.mkdir(basePath);
 
   const isStyledComponent = cssExtension === 'Styles.js';
